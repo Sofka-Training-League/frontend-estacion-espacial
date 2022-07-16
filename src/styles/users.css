@@ -1,0 +1,49 @@
+.title {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 600;
+}
+.containerUser {
+    padding: 30px;
+}
+.span {
+    background-color: #7bcff7;
+}
+
+.table-responsive {
+    padding: 30px;
+}
+
+.tableStyle {
+    background-color: #3e3e3e;
+    color:white;
+}
+
+.contentTable {
+    background-color: #083B81 ;
+    color: whitesmoke;
+}
+
+.buttonTable {
+    background-color:#0f6dfa;
+    color: white;
+    border-radius: 10px;
+}
+
+.buttonTableTrash{
+    background-color:#ed4d2f ;
+    border-radius: 10px;
+}
+
+.thTableId {
+    width: 8%;
+}
+
+.thTable {
+    width: 15%;
+}
+
+.thTableAcciones {
+    text-align:center;
+}
+
+
