@@ -3,13 +3,13 @@ import React, { useEffect, useState, useRef } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { nanoid } from 'nanoid';
 import { Dialog} from '@material-ui/core';
-import { getUsers, createUser, updateUser, deleteUser } from '../services/mongoDB/users';
+import { getUsuarios, createUsuario, updateUsuario, deleteUsuario } from '../services/mongoDB/usuarios';
 import ReactLoading from 'react-loading';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/modulo.css';
 
 //VISTA
-export const Users = () => {
+export const Usuarios = () => {
 
   const [mostrarTabla, setMostrarTabla] = useState(true);
   const [usuarios, setUsuarios] = useState([]);
@@ -24,7 +24,7 @@ export const Users = () => {
   useEffect(() => {
     const fetchUsuarios = async () => {
       setLoading(true);
-      await getUsers(
+      await getUsuarios(
         (response) => {
           console.log("Respuesta: ", response);
           setUsuarios(response.data);
@@ -211,7 +211,7 @@ const FilaUsuario = ({ usuario, setEjecutarConsulta }) => {
   const actualizarUsuario = async () => {
     //enviar la info al backend
 
-    await updateUser(
+    await updateUsuario(
       usuario._id,
       {
         usuario: infoNuevoUsuario.usuario,
@@ -232,7 +232,7 @@ const FilaUsuario = ({ usuario, setEjecutarConsulta }) => {
   };
 
   const eliminarUsuario = async () => {
-    await deleteUser(
+    await deleteUsuario(
       usuario._id,
       (response) => {
         console.log(response.data);
@@ -361,7 +361,7 @@ const FormularioCreacionUsuarios = ({ setMostrarTabla, listaUsuarios, setUsuario
       nuevoUsuario[key] = value;
     });
 
-    await createUser(
+    await createUsuario(
       {
         usuario: nuevoUsuario.usuario,
         rol: nuevoUsuario.rol,

@@ -8,7 +8,7 @@ import AuthLayout from '../layouts/AuthLayout';
 import PrivateLayout from '../layouts/PrivateLayout';
 import { DatosTecnicos } from '../pages/DatosTecnicos';
 import { Naves } from '../pages/Naves';
-import { Users } from '../pages/Users';
+import { Usuarios } from '../pages/Usuarios';
 import { Footer } from '../components/Footer';
 import { Tipos } from '../pages/Tipos';
 
@@ -30,7 +30,7 @@ const RouterApp = () => {
                                 <DatosTecnicos/>
                             </Route>   
                             <Route path='/admin/usuarios'>
-                                <Users/>
+                                <Usuarios/>
                             </Route>
                         </Switch>
                     </PrivateLayout>

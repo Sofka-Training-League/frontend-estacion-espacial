@@ -1,16 +1,18 @@
 import axios from "axios";
 
+const USUARIOS_REST_API_URL = process.env.REACT_APP_API_APIUSER || "http://localhost:5000";
+
 //TRAER TODOS LOS USUARIOS
-export const getUsers = async (successCallback, errorCallback) => {
-  const options = { method: "GET", url: "http://localhost:5000/usuarios" };
+export const getUsuarios = async (successCallback, errorCallback) => {
+  const options = { method: "GET", url: `${USUARIOS_REST_API_URL}/usuarios` };
   await axios.request(options).then(successCallback).catch(errorCallback);
 };
 
 //CREAR UN NUEVO USUARIO
-export const createUser = async (data, successCallback, errorCallback) => {
+export const createUsuario = async (data, successCallback, errorCallback) => {
   const options = {
     method: "POST",
-    url: "http://localhost:5000/usuarios/",
+    url:  `${USUARIOS_REST_API_URL}/usuarios/`,
     headers: { "Content-Type": "application/json" },
     data,
   };
@@ -18,10 +20,10 @@ export const createUser = async (data, successCallback, errorCallback) => {
 };
 
 //EDITAR USUARIO
-export const updateUser = async (id, data, successCallback, errorCallback) => {
+export const updateUsuario = async (id, data, successCallback, errorCallback) => {
   const options = {
     method: "PATCH",
-    url: `http://localhost:5000/usuarios/${id}/`,
+    url: `${USUARIOS_REST_API_URL}/usuarios/${id}/`,
     headers: { "Content-Type": "application/json" },
     data,
   };
@@ -29,10 +31,10 @@ export const updateUser = async (id, data, successCallback, errorCallback) => {
 };
 
 //ELIMINAR USUARIO
-export const deleteUser = async (id, successCallback, errorCallback) => {
+export const deleteUsuario = async (id, successCallback, errorCallback) => {
   const options = {
     method: "DELETE",
-    url: `http://localhost:5000/usuarios/${id}/`,
+    url: `${USUARIOS_REST_API_URL}/usuarios/${id}/`,
     headers: { "Content-Type": "application/json" },
   };
   await axios.request(options).then(successCallback).catch(errorCallback);
