@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+.container__header{
+   width: 100%;
+    height: 100%;  
+    display: flex;
+    justify-content: space-between; 
+    margin: auto;
+    padding: 0px 20px;
+    background-color: #3e3e3e;
+    border-bottom: 1px solid #ed4d2f;
+    box-shadow: 1px 1px #ed4d2f;
+}
+
+.buttonCollapse{
+    color: #083B81;
+}
+
+.iconCollapse{
+    color:white;
+}
+
+nav ul li{
+    margin: 0px 10px;
+    list-style: none;
+    text-decoration: none;
+
+}
+.navStyle{
+    background-color: #3e3e3e;
+    border-bottom: 1px solid #ed4d2f;
+    box-shadow: 1px 1px #ed4d2f; 
+    font-family: 'Poppins', sans-serif;
+    font-size: 19px;
+}
+
+.navLink{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.select {
+    font-weight: 600;
+    font-size: 23px;
+    padding: 10px 30px;
+    color: #08A5D2;
+    border-radius: 20px;
+    text-decoration: none;  
+}
+
+.select:hover {
+    color: white;
+    background: #083B81;
+    cursor: pointer;
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.select:focus {
+    color: white;
+    background: #083B81;
+ 
+}
+
+.buttonStyle{
+    background-color: #083B81;
+    color:white;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 20px;
+    box-shadow: 1px 1px #ed4d2f; 
+}
+
+.buttonStyle:hover {
+    background-color: #ed4d2f;
+    color:white;
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.buttonStyle:link{
+    background-color: #083B81;
+    color: white;
+    background-color: #3e3e3e;
+}
+
+.liButton{
+    margin-left: 10px;
+}
+
+.logout {
+    font-weight: 600;
+    padding: 10px 30px;
+    color: white;
+    background-color: #ed4d2f;
+    border-radius: 20px;
+    text-decoration: none;
+}
+
+.logout:hover {
+    color: white;
+    cursor: pointer;
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.logout:focus {
+    color: white;
+    background: #ed4d2f;
+}
+
+
+
