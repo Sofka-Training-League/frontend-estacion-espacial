@@ -17,8 +17,8 @@ import "../styles/modulo.css";
 export const Tipos = () => {
   const [mostrarTabla, setMostrarTabla] = useState(true);
   const [tipos, setTipos] = useState([]);
-  const [textButton, setTextButton] = useState("Crear Nave");
-  const [iconButton, setIconButton] = useState("fa fa-user-plus");
+  const [textButton, setTextButton] = useState("Crear tipo de nave");
+  const [iconButton, setIconButton] = useState("fab fa-typo3 ");
   const [tituloModulo, setTituloModulo] = useState("TIPOS DE NAVES");
   const [iconModulo, setIconModulo] = useState("fa fa-table");
   const [ejecutarConsulta, setEjecutarConsulta] = useState(true);
@@ -51,7 +51,7 @@ export const Tipos = () => {
     if (mostrarTabla) {
       setEjecutarConsulta(true);
       setTextButton("Crear tipo de nave");
-      setIconButton("fa fa-user-plus px-1");
+      setIconButton("fab fa-typo3 px-1");
       setTituloModulo("TIPOS DE NAVES");
       setIconModulo("fa fa-table");
     } else {

@@ -71,7 +71,7 @@ export const Naves = () => {
     if (mostrarTabla) {
       setEjecutarConsulta(true);
       setTextButton("Crear nave");
-      setIconButton("fa fa-user-plus px-1");
+      setIconButton("fas fa-rocket px-1");
       setTituloModulo("NAVES");
       setIconModulo("fa fa-table");
     } else {
