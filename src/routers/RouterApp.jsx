@@ -2,7 +2,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import React from 'react'
 import Login from '../pages/Login';
 // import Admin from 'pages/admin/Admin';
-import Home from '../pages/Home';
+import { Home } from '../pages/Home';
 import { PublicLayout } from '../layouts/PublicLayout';
 import AuthLayout from '../layouts/AuthLayout';
 import PrivateLayout from '../layouts/PrivateLayout';
