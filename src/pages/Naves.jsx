@@ -663,7 +663,7 @@ const FormularioCreacionRegistro = ({
         nombre: nuevoNave.nombre,
         paisorigen: nuevoNave.paisorigen,
         objetivo: nuevoNave.objetivo,
-        estado: nuevoNave.estado,
+        estado: 1,
       },
       (response) => {
         console.log(response.data);
