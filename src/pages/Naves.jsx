@@ -226,13 +226,7 @@ const TablaRegistros = ({
               <p className="card-text">
                 <span>{el.objetivo} </span>
                 <br />
-                <span>
-                  {el.estado === 1
-                    ? "En terreno"
-                    : el.estado === 2
-                    ? "En exploración"
-                    : "Exploración finalizada"}{" "}
-                </span>
+                <span>{el.estados.nombre}</span>
               </p>
             </div>
           </div>
@@ -255,7 +249,7 @@ const FilaNave = ({ nave, listaTipos, setEjecutarConsulta }) => {
     objetivo: nave.objetivo,
     inexploracion: nave.inexploracion,
     endexploracion: nave.endexploracion,
-    estado: nave.estado,
+    estados: nave.estados,
   });
 
   const actualizarRegistro = async () => {
@@ -271,7 +265,7 @@ const FilaNave = ({ nave, listaTipos, setEjecutarConsulta }) => {
         objetivo: infoNuevoRegistro.objetivo,
         inexploracion:nave.inexploracion,
         endexploracion:nave.endexploracion,
-        estado: infoNuevoRegistro.estado,
+        estados: infoNuevoRegistro.estados,
       },
       (response) => {
         console.log(response.data);
@@ -319,7 +313,7 @@ const FilaNave = ({ nave, listaTipos, setEjecutarConsulta }) => {
           infoNuevoRegistro.inexploracion !== ""
             ? infoNuevoRegistro.inexploracion
             : nave.inexploracion,
-        estado: infoNuevoRegistro.inexploracion !== null ? 2 : nave.estado,
+        estados: infoNuevoRegistro.inexploracion !== null ? { codigo: 2 } : nave.estados,
       },
       (response) => {
         console.log(response.data);
@@ -349,7 +343,7 @@ const FilaNave = ({ nave, listaTipos, setEjecutarConsulta }) => {
           infoNuevoRegistro.inexploracion !== ""
             ? infoNuevoRegistro.endexploracion
             : nave.inexploracion,
-        estado: infoNuevoRegistro.endexploracion !== null  ? 3 : nave.estado,
+        estados: infoNuevoRegistro.endexploracion !== null  ? { codigo: 3 } : nave.estados,
       },
       (response) => {
         console.log(response.data);
@@ -405,7 +399,7 @@ const FilaNave = ({ nave, listaTipos, setEjecutarConsulta }) => {
                 <input
                   id="nombre"
                   type="text"
-                  style={{ textTransform: "uppercase" }}
+                  // style={{ textTransform: "uppercase" }}
                   className="form-control rounded-lg m-2"
                   value={infoNuevoRegistro.nombre}
                   onChange={(e) =>
@@ -419,7 +413,7 @@ const FilaNave = ({ nave, listaTipos, setEjecutarConsulta }) => {
               </div>
               {/* pais de origen */}
               <div className="col-md-3">
-                <label htmlFor="paisorigen">Pais origen</label>
+                <label htmlFor="paisorigen">Origen</label>
                 <input
                   id="paisorigen"
                   type="text"
@@ -462,13 +456,7 @@ const FilaNave = ({ nave, listaTipos, setEjecutarConsulta }) => {
           <td>{nave.tipos.nombre}</td>
           <td>{nave.paisorigen}</td>
           <td>{nave.objetivo}</td>
-          <td>
-            {nave.estado === 1
-              ? "En terreno"
-              : nave.estado === 2
-              ? "En exploración"
-              : "Exploración finalizada"}
-          </td>
+          <td>{nave.estados.nombre}</td>
         </>
       )}
       <td>
@@ -500,32 +488,32 @@ const FilaNave = ({ nave, listaTipos, setEjecutarConsulta }) => {
               {/* boton eliminar */}
               <button
                 type="button"
-                onClick={() => nave.estado === 1 && setOpenDialog(true)}
+                onClick={() => nave.estados.codigo === 1 && setOpenDialog(true)}
                 className="btn btn-outline-danger btn-sm buttonTableTrash"
-                title={nave.estado === 1 ? "Eliminar" : "No permitido"}
-                disabled={nave.estado !== 1 ? "disabled" : ""}
+                title={nave.estados.codigo === 1 ? "Eliminar" : "No permitido"}
+                disabled={nave.estados.codigo !== 1 ? "disabled" : ""}
               >
                 <i className="fas fa-trash-alt"></i>
               </button>
               {/* boton lanzamiento */}
               <button
                 type="button"
-                onClick={() => nave.estado === 1 && setOpenDialogLaunch(true)}
+                onClick={() => nave.estados.codigo === 1 && setOpenDialogLaunch(true)}
                 className="btn btn-outline-success btn-sm buttonTableTrash"
-                title={nave.estado === 1 ? "Lanzamiento" : "No permitido"}
-                disabled={nave.estado !== 1 ? "disabled" : ""}
+                title={nave.estados.codigo === 1 ? "Lanzamiento" : "No permitido"}
+                disabled={nave.estados.codigo !== 1 ? "disabled" : ""}
               >
                 <i className="fas fa-rocket"></i>
               </button>
               {/* boton para finalizar exploracion */}
               <button
                 type="button"
-                onClick={() => nave.estado === 2 && setOpenDialogLaunch(true)}
+                onClick={() => nave.estados.codigo === 2 && setOpenDialogLaunch(true)}
                 className="btn btn-outline-warning btn-sm buttonTableTrash"
                 title={
-                  nave.estado === 2 ? "Detener exploración" : "No permitido"
+                  nave.estados.codigo === 2 ? "Detener exploración" : "No permitido"
                 }
-                disabled={nave.estado !== 2 ? "disabled" : ""}
+                disabled={nave.estados.codigo !== 2 ? "disabled" : ""}
               >
                 <i className="fas fa-stop"></i>
               </button>
@@ -564,13 +552,13 @@ const FilaNave = ({ nave, listaTipos, setEjecutarConsulta }) => {
           </div>
         </Dialog>
         {/* dialogo para iniciar o detener misión */}
-        {nave.estado >= 1 && nave.estado < 3 && (
+        {nave.estados.codigo >= 1 && nave.estados.codigo < 3 && (
             <Dialog open={openDialogLaunch}>
               <div>
                 <div className="row g-3 p-2">
                   <div className="col-md-11">
                     <h3 className="text-gray font-bold">
-                      {nave.estado === 1
+                      {nave.estados.codigo === 1
                         ? "Iniciar misión"
                         : "Finalizar misión"}
                     </h3>
@@ -591,8 +579,8 @@ const FilaNave = ({ nave, listaTipos, setEjecutarConsulta }) => {
                             inexploracion: e.target.value,
                           })
                         }
-                        disabled={nave.estado === 1 ? "" : "disabled"}
-                        required={nave.estado === 1 ? "required" : ""}
+                        disabled={nave.estados.codigo === 1 ? "" : "disabled"}
+                        required={nave.estados.codigo === 1 ? "required" : ""}
                       />
                   </div>
                     <div className="col-md-5">
@@ -610,8 +598,8 @@ const FilaNave = ({ nave, listaTipos, setEjecutarConsulta }) => {
                             endexploracion: e.target.value,
                           })
                         }
-                        disabled={nave.estado === 2 ? "" : "disabled"}
-                        required={nave.estado === 2 ? "required" : ""}
+                        disabled={nave.estados.codigo === 2 ? "" : "disabled"}
+                        required={nave.estados.codigo === 2 ? "required" : ""}
                       />
                   </div>
                 </div>
@@ -619,7 +607,7 @@ const FilaNave = ({ nave, listaTipos, setEjecutarConsulta }) => {
                 <div className="justify-center my-4">
                   
                   <button
-                    onClick={() => nave.estado === 1 ? iniciarObjetivo() : finalizarObjetivo()}
+                    onClick={() => nave.estados.codigo === 1 ? iniciarObjetivo() : finalizarObjetivo()}
                     className="mx-2 px-4 py-2 btn btn-success text-white rounded-md shadow-md"
                   >
                     Registrar
@@ -663,7 +651,7 @@ const FormularioCreacionRegistro = ({
         nombre: nuevoNave.nombre,
         paisorigen: nuevoNave.paisorigen,
         objetivo: nuevoNave.objetivo,
-        estado: 1,
+        estados: { codigo: 1 },
       },
       (response) => {
         console.log(response.data);
@@ -724,7 +712,7 @@ const FormularioCreacionRegistro = ({
         <input
           name="nombre"
           type="text"
-          style={{ textTransform: "uppercase" }}
+          // style={{ textTransform: "uppercase" }}
           className="form-control"
           placeholder="Nombre de la nave"
           required
@@ -733,7 +721,7 @@ const FormularioCreacionRegistro = ({
 
       <div className="col-md-3">
         <label htmlFor="paisorigen" className="form-label">
-          Pais origen
+          Origen
         </label>
         <input
           name="paisorigen"

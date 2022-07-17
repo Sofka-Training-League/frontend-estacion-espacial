@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/home.css";
 import computer from "../assets/image/undraw_Code_thinking_re_gka2.png";
 //import imgObjeto from "../assets/image/logoObjeto.png";
@@ -99,9 +99,9 @@ export const Home = () => {
                     <div className="card-footer">
                       <small className="text-muted">
                         <span>
-                          {nave.estado === 1
+                          {nave.estados.codigo === 1
                             ? "En terreno"
-                            : nave.estado === 2
+                            : nave.estados.codigo === 2
                             ? "En exploración"
                             : "Exploración finalizada"}{" "}
                         </span>
