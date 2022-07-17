@@ -131,7 +131,12 @@ export const Naves = () => {
 };
 
 //TABLA REGISTROS
-const TablaRegistros = ({ loading, listaNaves, listaTipos, setEjecutarConsulta }) => {
+const TablaRegistros = ({
+  loading,
+  listaNaves,
+  listaTipos,
+  setEjecutarConsulta,
+}) => {
   const [busqueda, setBusqueda] = useState("");
   const [navesFiltrados, setNavesFiltrados] = useState(listaNaves);
 
@@ -184,13 +189,11 @@ const TablaRegistros = ({ loading, listaNaves, listaTipos, setEjecutarConsulta }
                 <th className="thTable">Nave</th>
                 <th className="thTable">Tipo</th>
                 <th className="thTable">Origen</th>
-                <th className="thTable" style={{ width: "50%" }}>
+                <th className="thTable" style={{ width: "20%" }}>
                   Objetivo
                 </th>
                 <th className="thTable">Estado</th>
-                <th colSpan="3" className="">
-                  Acciones
-                </th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -223,7 +226,13 @@ const TablaRegistros = ({ loading, listaNaves, listaTipos, setEjecutarConsulta }
               <p className="card-text">
                 <span>{el.objetivo} </span>
                 <br />
-                <span>{el.estado === 1 ? "Activado" : "Inactivado"} </span>
+                <span>
+                  {el.estado === 1
+                    ? "En terreno"
+                    : el.estado === 2
+                    ? "En exploración"
+                    : "Exploración finalizada"}{" "}
+                </span>
               </p>
             </div>
           </div>
@@ -237,12 +246,15 @@ const TablaRegistros = ({ loading, listaNaves, listaTipos, setEjecutarConsulta }
 const FilaNave = ({ nave, listaTipos, setEjecutarConsulta }) => {
   const [edit, setEdit] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
+  const [openDialogLaunch, setOpenDialogLaunch] = useState(false);
   const [infoNuevoRegistro, setInfoNuevoRegistro] = useState({
     _id: nave.codnave,
     tipos: nave.tipos,
     nombre: nave.nombre,
     paisorigen: nave.paisorigen,
     objetivo: nave.objetivo,
+    inexploracion: nave.inexploracion,
+    endexploracion: nave.endexploracion,
     estado: nave.estado,
   });
 
@@ -257,6 +269,8 @@ const FilaNave = ({ nave, listaTipos, setEjecutarConsulta }) => {
         nombre: infoNuevoRegistro.nombre,
         paisorigen: infoNuevoRegistro.paisorigen,
         objetivo: infoNuevoRegistro.objetivo,
+        inexploracion:nave.inexploracion,
+        endexploracion:nave.endexploracion,
         estado: infoNuevoRegistro.estado,
       },
       (response) => {
@@ -289,37 +303,77 @@ const FilaNave = ({ nave, listaTipos, setEjecutarConsulta }) => {
     setOpenDialog(false);
   };
 
+  const iniciarObjetivo = async () => {
+    //enviar la info al backend
+
+    await updateNave(
+      nave.codnave,
+      {
+        codnave: nave.codnave,
+        tipos: nave.tipos,
+        nombre: nave.nombre,
+        paisorigen: nave.paisorigen,
+        objetivo: nave.objetivo,
+        endploracion: nave.endexploracion,
+        inexploracion:
+          infoNuevoRegistro.inexploracion !== ""
+            ? infoNuevoRegistro.inexploracion
+            : nave.inexploracion,
+        estado: infoNuevoRegistro.inexploracion !== null ? 2 : nave.estado,
+      },
+      (response) => {
+        console.log(response.data);
+        toast.success("Inicio de mision registrado");
+        setEjecutarConsulta(true);
+      },
+      (error) => {
+        toast.error("Error modificando el registro");
+        console.error(error);
+      }
+    );
+  };
+
+  const finalizarObjetivo = async () => {
+    //enviar la info al backend
+
+    await updateNave(
+      nave.codnave,
+      {
+        codnave: nave.codnave,
+        tipos: nave.tipos,
+        nombre: nave.nombre,
+        paisorigen: nave.paisorigen,
+        objetivo: nave.objetivo,
+        inexploracion: nave.inexploracion,
+        endexploracion:
+          infoNuevoRegistro.inexploracion !== ""
+            ? infoNuevoRegistro.endexploracion
+            : nave.inexploracion,
+        estado: infoNuevoRegistro.endexploracion !== null  ? 3 : nave.estado,
+      },
+      (response) => {
+        console.log(response.data);
+        toast.success("Finalizamiento de la mision registrado");
+        setEjecutarConsulta(true);
+      },
+      (error) => {
+        toast.error("Error modificando el registro");
+        console.error(error);
+      }
+    );
+  };
+
   return (
     <tr>
       {/* edicion fila */}
       {edit ? (
         <>
-          <td colSpan={7}>
+          <td colSpan={6}>
             {/* {infoNuevoRegistro.codnave} */}
             <div className="row">
-              {/* estado */}
-              {/* <div className="col-md-4">
-                <label for="estado">Estado</label>
-                <select
-                  id="estado"
-                  className="form-control rounded-lg m-2"
-                  value={infoNuevoRegistro.estado}
-                  onChange={(e) =>
-                    setInfoNuevoRegistro({
-                      ...infoNuevoRegistro,
-                      estado: e.target.value,
-                    })
-                  }
-                  required
-                >
-                  <option value="">Seleccione opción</option>
-                  <option value={1}>Activado</option>
-                  <option value={0}>Inactivado</option>
-                </select>
-              </div> */}
               {/* tipo nave */}
               <div className="col-md-3">
-                <label for="tiponave2">Tipo de nave</label>
+                <label htmlFor="tiponave2">Tipo de nave</label>
                 <select
                   name="tiponave"
                   className="form-control  rounded-lg m-2"
@@ -337,13 +391,17 @@ const FilaNave = ({ nave, listaTipos, setEjecutarConsulta }) => {
                     Seleccione una opción
                   </option>
                   {listaTipos.map((tipo) => {
-                      return <option value={tipo.codtiponave} selected>{tipo.nombre}</option>
+                    return (
+                      <option value={tipo.codtiponave} selected>
+                        {tipo.nombre}
+                      </option>
+                    );
                   })}
                 </select>
               </div>
               {/* nombre */}
               <div className="col-md-6">
-                <label for="nombre">Nave</label>
+                <label htmlFor="nombre">Nave</label>
                 <input
                   id="nombre"
                   type="text"
@@ -361,7 +419,7 @@ const FilaNave = ({ nave, listaTipos, setEjecutarConsulta }) => {
               </div>
               {/* pais de origen */}
               <div className="col-md-3">
-                <label for="paisorigen">Pais origen</label>
+                <label htmlFor="paisorigen">Pais origen</label>
                 <input
                   id="paisorigen"
                   type="text"
@@ -379,7 +437,7 @@ const FilaNave = ({ nave, listaTipos, setEjecutarConsulta }) => {
             </div>
 
             <div className="form-group">
-              <label for="objetivo">Objetivo</label>
+              <label htmlFor="objetivo">Objetivo</label>
               <textarea
                 className="form-control rounded-lg m-2"
                 id="objetivo"
@@ -404,13 +462,20 @@ const FilaNave = ({ nave, listaTipos, setEjecutarConsulta }) => {
           <td>{nave.tipos.nombre}</td>
           <td>{nave.paisorigen}</td>
           <td>{nave.objetivo}</td>
-          <td>{nave.estado === 1 ? "Activado" : "Inactivado"}</td>
+          <td>
+            {nave.estado === 1
+              ? "En terreno"
+              : nave.estado === 2
+              ? "En exploración"
+              : "Exploración finalizada"}
+          </td>
         </>
       )}
       <td>
         <div className="justify-around">
           {/* botonera edicion fila*/}
           {edit ? (
+            // guardar o cancelar
             <>
               <button
                 type="button"
@@ -432,17 +497,43 @@ const FilaNave = ({ nave, listaTipos, setEjecutarConsulta }) => {
           ) : (
             // botonera vista fila
             <>
+              {/* boton eliminar */}
               <button
                 type="button"
-                onClick={() => setOpenDialog(true)}
-                className="btn btn-danger buttonTableTrash"
+                onClick={() => nave.estado === 1 && setOpenDialog(true)}
+                className="btn btn-outline-danger btn-sm buttonTableTrash"
+                title={nave.estado === 1 ? "Eliminar" : "No permitido"}
+                disabled={nave.estado !== 1 ? "disabled" : ""}
               >
                 <i className="fas fa-trash-alt"></i>
               </button>
+              {/* boton lanzamiento */}
               <button
                 type="button"
-                className="btn btn-primary buttonTable"
-                title="Editar Nave"
+                onClick={() => nave.estado === 1 && setOpenDialogLaunch(true)}
+                className="btn btn-outline-success btn-sm buttonTableTrash"
+                title={nave.estado === 1 ? "Lanzamiento" : "No permitido"}
+                disabled={nave.estado !== 1 ? "disabled" : ""}
+              >
+                <i className="fas fa-rocket"></i>
+              </button>
+              {/* boton para finalizar exploracion */}
+              <button
+                type="button"
+                onClick={() => nave.estado === 2 && setOpenDialogLaunch(true)}
+                className="btn btn-outline-warning btn-sm buttonTableTrash"
+                title={
+                  nave.estado === 2 ? "Detener exploración" : "No permitido"
+                }
+                disabled={nave.estado !== 2 ? "disabled" : ""}
+              >
+                <i className="fas fa-stop"></i>
+              </button>
+              {/* boton para editar */}
+              <button
+                type="button"
+                className="btn btn-outline-primary btn-sm buttonTable"
+                title="Editar"
                 onClick={() => setEdit(!edit)}
               >
                 <i className="fas fa-pencil-alt"></i>
@@ -472,6 +563,77 @@ const FilaNave = ({ nave, listaTipos, setEjecutarConsulta }) => {
             </div>
           </div>
         </Dialog>
+        {/* dialogo para iniciar o detener misión */}
+        {nave.estado >= 1 && nave.estado < 3 && (
+            <Dialog open={openDialogLaunch}>
+              <div>
+                <div className="row g-3 p-2">
+                  <div className="col-md-11">
+                    <h3 className="text-gray font-bold">
+                      {nave.estado === 1
+                        ? "Iniciar misión"
+                        : "Finalizar misión"}
+                    </h3>
+                  </div>
+                  
+                  <div className="col-md-5">
+                    <label htmlFor="inexploracion">
+                        Inicio exploración
+                    </label>
+                      <input
+                        id="inexploracion"
+                        type="date"
+                        className="form-control rounded-lg m-2"
+                        value={infoNuevoRegistro.inexploracion}
+                        onChange={(e) =>
+                          setInfoNuevoRegistro({
+                            ...infoNuevoRegistro,
+                            inexploracion: e.target.value,
+                          })
+                        }
+                        disabled={nave.estado === 1 ? "" : "disabled"}
+                        required={nave.estado === 1 ? "required" : ""}
+                      />
+                  </div>
+                    <div className="col-md-5">
+                    <label htmlFor="inexploracion">
+                        Fin exploración
+                    </label>
+                      <input
+                        id="endexploracion"
+                        type="date"
+                        className="form-control rounded-lg m-2"
+                        value={infoNuevoRegistro.endexploracion}
+                        onChange={(e) =>
+                          setInfoNuevoRegistro({
+                            ...infoNuevoRegistro,
+                            endexploracion: e.target.value,
+                          })
+                        }
+                        disabled={nave.estado === 2 ? "" : "disabled"}
+                        required={nave.estado === 2 ? "required" : ""}
+                      />
+                  </div>
+                </div>
+
+                <div className="justify-center my-4">
+                  
+                  <button
+                    onClick={() => nave.estado === 1 ? iniciarObjetivo() : finalizarObjetivo()}
+                    className="mx-2 px-4 py-2 btn btn-success text-white rounded-md shadow-md"
+                  >
+                    Registrar
+                  </button>
+                  <button
+                    onClick={() => setOpenDialogLaunch(false)}
+                    className="mx-2 px-4 py-2 btn btn-danger text-white rounded-md shadow-md"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            </Dialog>
+          )}
       </td>
     </tr>
   );
