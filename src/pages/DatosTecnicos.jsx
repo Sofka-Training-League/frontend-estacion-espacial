@@ -362,13 +362,13 @@ const FilaNave = ({ datoTecnico, setEjecutarConsulta }) => {
               <button
                 type="button"
                 onClick={() => setOpenDialog(true)}
-                className="btn btn-danger buttonTableTrash"
+                className="btn btn-outline-danger btn-sm buttonTableTrash"
               >
                 <i className="fas fa-trash-alt"></i>
               </button>
               <button
                 type="button"
-                className="btn btn-primary buttonTable"
+                className="btn btn-outline-primary btn-sm buttonTable"
                 title="Editar Nave"
                 onClick={() => setEdit(!edit)}
               >

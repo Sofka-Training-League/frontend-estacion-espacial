@@ -214,7 +214,7 @@ const FilaUsuario = ({ usuario, setEjecutarConsulta }) => {
     await updateUsuario(
       usuario._id,
       {
-        usuario: infoNuevoUsuario.usuario,
+        usuario: infoNuevoUsuario.usuario.toString().toLowerCase(),
         rol: infoNuevoUsuario.rol,
         estado: infoNuevoUsuario.estado,
       },
@@ -303,6 +303,7 @@ const FilaUsuario = ({ usuario, setEjecutarConsulta }) => {
       <td>
         <div className='justify-around'>
           {edit ? (
+            // botonera edicion
             <>
               <button type="button" className="btn btn-success buttonTable" title="Confirmar Edición"  onClick={() => actualizarUsuario()}>
                 <i className="fas fa-check "></i>
@@ -312,16 +313,18 @@ const FilaUsuario = ({ usuario, setEjecutarConsulta }) => {
               </button>
             </>
           ) : (
+            // Botonera vista 
             <>
-                <button type="button" onClick={() => setOpenDialog(true)} className="btn btn-danger buttonTableTrash">
+                <button type="button" onClick={() => setOpenDialog(true)} className="btn btn-outline-danger btn-sm buttonTableTrash">
                   <i className="fas fa-trash-alt"></i>
                 </button>
-                <button type="button" className="btn btn-primary buttonTable" title='Editar Usuario' onClick={() => setEdit(!edit)}>
+                <button type="button" className="btn btn-outline-primary btn-sm buttonTable" title='Editar Usuario' onClick={() => setEdit(!edit)}>
                   <i className="fas fa-pencil-alt"></i>
                 </button>
             </>
           )}
         </div>
+        {/* dialogo eliminar */}
         <Dialog open={openDialog}>
           <div>
             <h1 className='text-gray font-bold'>
@@ -363,7 +366,7 @@ const FormularioCreacionUsuarios = ({ setMostrarTabla, listaUsuarios, setUsuario
 
     await createUsuario(
       {
-        usuario: nuevoUsuario.usuario,
+        usuario: nuevoUsuario.usuario.toString().toLowerCase(),
         rol: nuevoUsuario.rol,
         estado: nuevoUsuario.estado,
       },

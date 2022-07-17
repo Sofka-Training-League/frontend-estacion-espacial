@@ -159,8 +159,8 @@ const TablaRegistros = ({ loading, listaTipos, setEjecutarConsulta }) => {
             <thead className="tableStyle">
               <tr>
                 <th className="thTableId">#</th>
-                <th className="thTable">Tipo nave</th>
-                <th className="thTable" style={{ width: "50%" }}>
+                <th className="thTable" style={{ width: "30%" }}>Tipo nave</th>
+                <th className="thTable" style={{ width: "35%" }}>
                   Descripcion
                 </th>
                 <th className="thTable">Estado</th>
@@ -271,7 +271,7 @@ const FilaTipo = ({ tipo, setEjecutarConsulta }) => {
                   <label htmlFor="nombre">Tipo de nave</label>
                   <input
                     id="nombre"
-                    style={{ textTransform: "uppercase" }}
+                    // style={{ textTransform: "uppercase" }}
                     className="form-control rounded-lg m-2"
                     type="text"
                     value={infoNuevoRegistro.nombre}
@@ -356,13 +356,13 @@ const FilaTipo = ({ tipo, setEjecutarConsulta }) => {
               <button
                 type="button"
                 onClick={() => setOpenDialog(true)}
-                className="btn btn-danger buttonTableTrash"
+                className="btn btn-outline-danger btn-sm buttonTableTrash"
               >
                 <i className="fas fa-trash-alt"></i>
               </button>
               <button
                 type="button"
-                className="btn btn-primary buttonTable"
+                className="btn btn-outline-primary btn-sm buttonTable"
                 title="Editar Tipo"
                 onClick={() => setEdit(!edit)}
               >
@@ -442,7 +442,7 @@ const FormularioCreacionRegistro = ({
         <input
           name="nombre"
           type="text"
-          style={{ textTransform: "uppercase" }}
+          // style={{ textTransform: "uppercase" }}
           className="form-control"
           placeholder="Nombre del tipo de nave"
           required
