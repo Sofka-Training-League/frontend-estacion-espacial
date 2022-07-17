@@ -88,6 +88,7 @@ export const Tipos = () => {
           <div className="row">
             {mostrarTabla ? (
               <TablaRegistros
+                key={nanoid()}
                 loading={loading}
                 listaTipos={tipos}
                 setEjecutarConsulta={setEjecutarConsulta}
@@ -267,7 +268,7 @@ const FilaTipo = ({ tipo, setEjecutarConsulta }) => {
             {/* {infoNuevoRegistro.codtiponave} */}
               <div className="row">
                 <div className="col">
-                  <label for="nombre">Tipo de nave</label>
+                  <label htmlFor="nombre">Tipo de nave</label>
                   <input
                     id="nombre"
                     style={{ textTransform: "uppercase" }}
@@ -285,7 +286,7 @@ const FilaTipo = ({ tipo, setEjecutarConsulta }) => {
                 </div>
                 <div className="col">
                   {/* <input type="text" className="form-control" placeholder="First name" /> */}
-                  <label for="estado">Estado</label>
+                  <label htmlFor="estado">Estado</label>
                   <select
                     id="estado"
                     className="form-control rounded-lg m-2"
@@ -305,7 +306,7 @@ const FilaTipo = ({ tipo, setEjecutarConsulta }) => {
                 </div>
               </div>
               <div className="form-group">
-                <label for="descripcion">Notas</label>
+                <label htmlFor="descripcion">Notas</label>
                 <textarea
                   className="form-control rounded-lg m-2"
                   id="descripcion"
