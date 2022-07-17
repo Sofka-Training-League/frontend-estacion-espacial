@@ -288,7 +288,7 @@ const FilaNave = ({ datoTecnico, setEjecutarConsulta }) => {
             <div className="row">
               {/* dato tecnico */}
               <div className="col-md-6">
-                <label for="datotecnico">Dato técnico</label>
+                <label htmlFor="datotecnico">Dato técnico</label>
                 <input
                   id="datotecnico"
                   type="text"
@@ -306,7 +306,7 @@ const FilaNave = ({ datoTecnico, setEjecutarConsulta }) => {
               </div>
               {/* valor del dato tecnico */}
               <div className="col-md-6">
-                <label for="valor">Valor</label>
+                <label htmlFor="valor">Valor</label>
                 <input
                   id="valor"
                   type="text"
