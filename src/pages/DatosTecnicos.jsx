@@ -131,7 +131,7 @@ export const DatosTecnicos = () => {
 //TABLA REGISTROS
 const TablaRegistros = ({ loading, listaNaves, listaDatosTecnicos ,setEjecutarConsulta }) => {
   const [busqueda, setBusqueda] = useState("");
-  const [navesFiltrados, setNavesFiltrados] = useState(listaNaves);
+  //const [navesFiltrados, setNavesFiltrados] = useState(listaNaves);
   const [datosTecnicosFiltrados, setDatosTecnicosFiltrados] = useState(listaDatosTecnicos);
 
   useEffect(() => {

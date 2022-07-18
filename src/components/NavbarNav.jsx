@@ -12,7 +12,7 @@ import {
   DropdownItem,
 } from 'reactstrap';
 
-import logo from '../assets/image/logoObjeto.png'
+//import logo from '../assets/image/logoObjeto.png'
 import user from '../assets/image/user.PNG'
 import '../styles/navbar.css'
 
