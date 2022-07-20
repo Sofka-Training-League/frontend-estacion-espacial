@@ -7,6 +7,8 @@ import {
   getNaves,
   createNave,
   updateNave,
+  inLautchNave,
+  endLautchNave,
   deleteNave,
 } from "../services/mySQL/naves";
 import { getTipos } from "../services/mySQL/tipos";
@@ -300,20 +302,20 @@ const FilaNave = ({ nave, listaTipos, setEjecutarConsulta }) => {
   const iniciarObjetivo = async () => {
     //enviar la info al backend
 
-    await updateNave(
+    await inLautchNave(
       nave.codnave,
       {
-        codnave: nave.codnave,
-        tipos: nave.tipos,
-        nombre: nave.nombre,
-        paisorigen: nave.paisorigen,
-        objetivo: nave.objetivo,
-        endploracion: nave.endexploracion,
+        // codnave: nave.codnave,
+        // tipos: nave.tipos,
+        // nombre: nave.nombre,
+        // paisorigen: nave.paisorigen,
+        // objetivo: nave.objetivo,
+        // endploracion: nave.endexploracion,
         inexploracion:
           infoNuevoRegistro.inexploracion !== ""
-            ? infoNuevoRegistro.inexploracion
+            ? new Date(infoNuevoRegistro.inexploracion).toISOString().slice(0, 10)
             : nave.inexploracion,
-        estados: infoNuevoRegistro.inexploracion !== null ? { codigo: 2 } : nave.estados,
+        // estados: infoNuevoRegistro.inexploracion !== null ? { codigo: 2 } : nave.estados,
       },
       (response) => {
         console.log(response.data);
@@ -330,20 +332,20 @@ const FilaNave = ({ nave, listaTipos, setEjecutarConsulta }) => {
   const finalizarObjetivo = async () => {
     //enviar la info al backend
 
-    await updateNave(
+    await endLautchNave(
       nave.codnave,
       {
-        codnave: nave.codnave,
-        tipos: nave.tipos,
-        nombre: nave.nombre,
-        paisorigen: nave.paisorigen,
-        objetivo: nave.objetivo,
+        // codnave: nave.codnave,
+        // tipos: nave.tipos,
+        // nombre: nave.nombre,
+        // paisorigen: nave.paisorigen,
+        // objetivo: nave.objetivo,
         inexploracion: nave.inexploracion,
         endexploracion:
           infoNuevoRegistro.inexploracion !== ""
-            ? infoNuevoRegistro.endexploracion
-            : nave.inexploracion,
-        estados: infoNuevoRegistro.endexploracion !== null  ? { codigo: 3 } : nave.estados,
+            ? new Date(infoNuevoRegistro.endexploracion).toISOString().slice(0, 10)
+            : nave.endexploracion,
+        //estados: infoNuevoRegistro.endexploracion !== null  ? { codigo: 3 } : nave.estados,
       },
       (response) => {
         console.log(response.data);

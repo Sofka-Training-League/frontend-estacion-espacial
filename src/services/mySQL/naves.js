@@ -44,6 +44,38 @@ export const updateNave = async (id, data, successCallback, errorCallback) => {
   await axios.request(options).then(successCallback).catch(errorCallback);
 };
 
+//INICIO MISION, ALTERA LA FECHA IN
+export const inLautchNave = async (
+  id,
+  data,
+  successCallback,
+  errorCallback
+) => {
+  const options = {
+    method: "PATCH",
+    url: `${TIPOS_REST_API_URL}/iniciarmision/${id}`,
+    headers: { "Content-Type": "application/json" },
+    data,
+  };
+  await axios.request(options).then(successCallback).catch(errorCallback);
+};
+
+//FIN MISION, ALTERA LA FECHA OUT
+export const endLautchNave = async (
+  id,
+  data,
+  successCallback,
+  errorCallback
+) => {
+  const options = {
+    method: "PATCH",
+    url: `${TIPOS_REST_API_URL}/finalizarmision/${id}`,
+    headers: { "Content-Type": "application/json" },
+    data,
+  };
+  await axios.request(options).then(successCallback).catch(errorCallback);
+};
+
 //ELIMINAR REGISTRO
 export const deleteNave = async (id, successCallback, errorCallback) => {
   const options = {
